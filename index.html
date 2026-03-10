@@ -445,7 +445,7 @@ const pvBoth   = [0, 0, 0, 2, 6, 4, 1, 0, 0, 2, 0, 2, 0];
 
 let monthlyChart;
 function initCharts(tab) {
-  if(tab==='overview') {
+  if(tab==='overview') { try {
     monthlyChart = new Chart(document.getElementById('monthlyChart'), {
       type:'bar',
       data:{labels:monthlyLabels,datasets:[
@@ -631,7 +631,7 @@ function exportCSV() {
   const cols=['date','postedBy','type','distroTag','impressions','clicks','likes','comments','reposts','engRate','tag','title','link'];
   const e=v=>{const s=String(v==null?'':v);return(s.includes(',')||s.includes('"')||s.includes('\n'))?'"'+s.replace(/"/g,'""')+'"':s;};
   const body=POSTS.map(p=>cols.map(c=>e(p[c])).join(',')).join('\n');
-  const blob=new Blob([cols.join(','+'\n'+body],{type:'text/csv'});
+  const blob=new Blob([cols.join(',')+  '\n'+body],{type:'text/csv'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='posit_linkedin_tagged.csv';a.click();
 }
 
